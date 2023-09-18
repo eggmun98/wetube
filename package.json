@@ -2,7 +2,9 @@
   "name": "wetube",
   "version": "1.0.0",
   "description": "The best way to watch videos.",
-  "main": "index.js",
+  "scripts": {
+    "win": "node index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eggmun98/wetube.git"
@@ -12,5 +14,8 @@
   "bugs": {
     "url": "https://github.com/eggmun98/wetube/issues"
   },
-  "homepage": "https://github.com/eggmun98/wetube#readme"
+  "homepage": "https://github.com/eggmun98/wetube#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
