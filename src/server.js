@@ -10,6 +10,11 @@ const handleHome = (req, res) => {
   return res.send("<h1>hello</h1>");
 };
 
+const gossipMiddleware = (req, res, next) => {
+  console.log(`s누군가 req.url로 가려고 한다. ${req.url}`);
+  next();
+};
+
 // 브라우저가 요청을 하면 서버는 무조건 응답을 해줘야 한다.
 // html파일, 객체, 배열 등등 많은 것을 응답해 줄수 있다.
 const handleLogin = (req, res) => {
@@ -18,7 +23,7 @@ const handleLogin = (req, res) => {
 
 app.get("/", handleHome);
 
-app.get("/login", handleLogin);
+app.get("/login", gossipMiddleware, handleLogin);
 
 const handleListening = () => console.log("시작sssssss");
 
