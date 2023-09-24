@@ -7,6 +7,7 @@
 
 /user/edit => edit profile
 /user/delete => Delete Profile
+
 /videos/watch => Watch Video
 /videos/edit => Edit Video
 /videos/delete => Delete Video
