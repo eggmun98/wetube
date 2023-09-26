@@ -1,4 +1,6 @@
-export const trending = (req, res) => res.send("Home Page Videos");
+export const trending = (req, res) => {
+  return res.render("home");
+};
 export const see = (req, res) => {
   console.log(req.params);
   return res.send("Watch");
