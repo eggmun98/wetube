@@ -10,11 +10,12 @@ const PORT = 4000;
 
 const app = express();
 const logger = morgan("dev"); // 모간은 미들웨어이다.
-app.use(logger); // app.use부터 코드를 적어야 한다. 만약 app.use가 19번줄이고 app.get("/". home)가 18번줄이면 미들웨어는 20번 코드에서만 작동
 
 app.set("view engine", "pug"); // 뷰 엔진을 pug로 쓴다고 등록
 app.set("views", process.cwd() + "/src/views"); // 뷰 엔진의 디렉토리 위치 변경
-app.use(express.urlencoded({ extended: true })); // express가 form data를 읽을 수 있게 해줌
+app.use(logger); // app.use부터 코드를 적어야 한다. 만약 app.use가 19번줄이고 app.get("/". home)가 18번줄이면 미들웨어는 20번 코드에서만 작동
+app.use(express.urlencoded({ extended: true })); // express가 form data를 읽을 수 있게 해줌 즉 자바스크립트 오브젝트 형식으로 바꿔줌
+
 app.use("/", globalRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
