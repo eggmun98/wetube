@@ -14,6 +14,7 @@ app.use(logger); // app.use부터 코드를 적어야 한다. 만약 app.use가 
 
 app.set("view engine", "pug"); // 뷰 엔진을 pug로 쓴다고 등록
 app.set("views", process.cwd() + "/src/views"); // 뷰 엔진의 디렉토리 위치 변경
+app.use(express.urlencoded({ extended: true })); // express가 form data를 읽을 수 있게 해줌
 app.use("/", globalRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
