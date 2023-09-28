@@ -17,6 +17,7 @@
   "homepage": "https://github.com/eggmun98/wetube#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "mongoose": "^7.5.3",
     "morgan": "^1.10.0",
     "pug": "^3.0.2"
   },
