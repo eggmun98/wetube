@@ -1,12 +1,9 @@
-import "./db"; // 파일 자체를 import => db와 연결
-import "./models/Video";
 import express from "express";
 import morgan from "morgan";
 import globalRouter from "./routers/globalRouter";
 import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
 
-const PORT = 4000;
 // console.log( process.cwd() )  현재 작업 위치의 디렉토리
 // 현재 작업 디렉토리는 노드를 시작하는 디렉토리이다.
 
@@ -22,6 +19,4 @@ app.use("/", globalRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
 
-const handleListening = () => console.log("시작sssssss");
-
-app.listen(PORT, handleListening);
+export default app;

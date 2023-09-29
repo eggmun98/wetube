@@ -5,7 +5,7 @@ import {
   postEdit,
   postUpload,
   watch,
-} from "./controllers/videoController";
+} from "../controllers/videoController";
 
 const videoRouter = express.Router();
 
