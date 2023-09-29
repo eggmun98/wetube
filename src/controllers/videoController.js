@@ -35,10 +35,6 @@ export const postUpload = async (req, res) => {
       title,
       description,
       hashtags: hashtags.split(",").map((el) => `#${el}`),
-      meta: {
-        views: 0,
-        rating: 0,
-      },
     });
     const dbVideo = await video.save();
   } catch (error) {
