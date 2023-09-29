@@ -1,11 +1,8 @@
 import Video from "../models/Video";
 
 export const home = async (req, res) => {
-  // Video.find({}, (err, videos) => {
-  // });
-
   const videos = await Video.find();
-  res.render("home", { pageTitle: "Home", videos }); // 콜백함수의 방법 // db를 불러오기 전에 랜더하기 방지하기 위해 콜백함수 안에 넣음
+  res.render("home", { pageTitle: "Home", videos });
 };
 
 export const watch = (req, res) => {
@@ -30,16 +27,17 @@ export const getUpload = (req, res) => {
 
 export const postUpload = (req, res) => {
   console.log(req.body);
-  const { title } = req.body;
-  const newVideo = {
+  const { title, description, hashtags } = req.body;
+  const video = new Video({
     title,
-    rating: 0,
-    comments: 0,
-    createdAt: "just now",
-    views: 1,
-    id: 1,
-  };
-  videos.push(newVideo);
-  // here we will add a video to the videos array.
+    description,
+    createdAt: Date.now(),
+    hashtags: hashtags.split(",").map((el) => `#${el}`),
+    meta: {
+      views: 0,
+      rating: 0,
+    },
+  });
+  console.log(video);
   return res.redirect("/");
 };
