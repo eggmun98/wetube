@@ -5,7 +5,7 @@ export const home = async (req, res) => {
   // });
 
   const videos = await Video.find();
-  return res.render("home", { pageTitle: "Home", videos }); // 콜백함수의 방법 // db를 불러오기 전에 랜더하기 방지하기 위해 콜백함수 안에 넣음
+  res.render("home", { pageTitle: "Home", videos }); // 콜백함수의 방법 // db를 불러오기 전에 랜더하기 방지하기 위해 콜백함수 안에 넣음
 };
 
 export const watch = (req, res) => {
