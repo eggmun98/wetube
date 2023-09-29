@@ -56,7 +56,7 @@ export const postUpload = async (req, res) => {
     const video = new Video({
       title,
       description,
-      hashtags: hashtags.split(",").map((el) => `#${el}`),
+      hashtags,
     });
     const dbVideo = await video.save();
   } catch (error) {

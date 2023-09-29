@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 mongoose.connect("mongodb://127.0.0.1:27017/wetube", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  // useFindAndModify: true,  최신 버전의 몽고db에서는 필요없음
 }); // 몽고db 연결시켜줌
 
 const db = mongoose.connection;
