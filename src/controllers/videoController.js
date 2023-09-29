@@ -25,11 +25,20 @@ export const getEdit = async (req, res) => {
   return res.render("edit", { pageTitle: `Editing:${video.title} `, video });
 };
 
-export const postEdit = (req, res) => {
+export const postEdit = async (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
-  videos[id - 1].title = title; // 목업 데이터 베이스 수정
-  res.redirect(`/videos/${id}`);
+  const { title, description, hashtags } = req.body;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.render("404", { pageTitle: "Video not found" });
+  }
+  video.title = title;
+  video.description = description;
+  video.hashtags = hashtags
+    .split(",")
+    .map((el) => (el.startsWith("#") ? el : `#${el}`));
+  await video.save();
+  return res.redirect(`/videos/${id}`);
 };
 
 export const getUpload = (req, res) => {
