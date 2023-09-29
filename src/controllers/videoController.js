@@ -1,12 +1,11 @@
 import Video from "../models/Video";
 
-export const home = (req, res) => {
-  console.log("Start");
-  Video.find({}, (err, videos) => {
-    console.log("Finished");
-    return res.render("home", { pageTitle: "Home", videos }); // 콜백함수의 방법 // db를 불러오기 전에 랜더하기 방지하기 위해 콜백함수 안에 넣음
-  });
-  console.log("I finish first");
+export const home = async (req, res) => {
+  // Video.find({}, (err, videos) => {
+  // });
+
+  const videos = await Video.find();
+  return res.render("home", { pageTitle: "Home", videos }); // 콜백함수의 방법 // db를 불러오기 전에 랜더하기 방지하기 위해 콜백함수 안에 넣음
 };
 
 export const watch = (req, res) => {
