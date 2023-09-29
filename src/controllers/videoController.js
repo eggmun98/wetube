@@ -28,16 +28,19 @@ export const getEdit = async (req, res) => {
 export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
-  const video = await Video.findById(id);
+  const video = await Video.exists({ _id: id }); // 비디오 객체를 다 가져올 필요가 없음 exists가 true false로 Video가 있는지 판단
+  // 즉 영상이 있는지 없는지만 확인하는게 효율적 getEdit는 pageTitle에 타이틀을 보내줘야 하기 때문에 객체를 다 가져옴
   if (!video) {
     return res.render("404", { pageTitle: "Video not found" });
   }
-  video.title = title;
-  video.description = description;
-  video.hashtags = hashtags
-    .split(",")
-    .map((el) => (el.startsWith("#") ? el : `#${el}`));
-  await video.save();
+  await Video.findByIdAndUpdate(id, {
+    title,
+    description,
+    hashtags: hashtags
+      .split(",")
+      .map((el) => (el.startsWith("#") ? el : `#${el}`)),
+  });
+
   return res.redirect(`/videos/${id}`);
 };
 
