@@ -36,9 +36,7 @@ export const postEdit = async (req, res) => {
   await Video.findByIdAndUpdate(id, {
     title,
     description,
-    hashtags: hashtags
-      .split(",")
-      .map((el) => (el.startsWith("#") ? el : `#${el}`)),
+    hashtags: Video.formatHashtags(hashtags),
   });
 
   return res.redirect(`/videos/${id}`);
@@ -56,9 +54,9 @@ export const postUpload = async (req, res) => {
     const video = new Video({
       title,
       description,
-      hashtags,
+      hashtags: Video.formatHashtags(hashtags),
     });
-    const dbVideo = await video.save();
+    await video.save();
   } catch (error) {
     console.log(error);
     return res.render("upload", {
