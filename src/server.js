@@ -1,6 +1,6 @@
 import express from "express";
 import morgan from "morgan";
-import globalRouter from "./routers/globalRouter";
+import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
 
@@ -15,7 +15,7 @@ app.set("views", process.cwd() + "/src/views"); // 뷰 엔진의 디렉토리 �
 app.use(logger); // app.use부터 코드를 적어야 한다. 만약 app.use가 19번줄이고 app.get("/". home)가 18번줄이면 미들웨어는 20번 코드에서만 작동
 app.use(express.urlencoded({ extended: true })); // express가 form data를 읽을 수 있게 해줌 즉 자바스크립트 오브젝트 형식으로 바꿔줌
 
-app.use("/", globalRouter);
+app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
 
