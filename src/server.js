@@ -24,6 +24,11 @@ app.use(
   })
 );
 
+app.get("/test", (req, res, next) => {
+  req.session.count += 1;
+  return res.send(`${req.session.count}`);
+});
+
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
