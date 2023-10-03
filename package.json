@@ -23,6 +23,7 @@
     "express-session": "^1.17.3",
     "mongoose": "^7.5.3",
     "morgan": "^1.10.0",
+    "node-fetch": "^3.3.2",
     "pug": "^3.0.2"
   },
   "devDependencies": {
