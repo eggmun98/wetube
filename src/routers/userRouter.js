@@ -5,6 +5,7 @@ import {
   remove,
   see,
   startGithubLogin,
+  finishGithubLogin,
 } from "../controllers/userController";
 
 const userRouter = express.Router();
