@@ -4,6 +4,7 @@ import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
 import session from "express-session";
+import { localsMiddleware } from "./middlewares";
 
 // console.log( process.cwd() )  현재 작업 위치의 디렉토리
 // 현재 작업 디렉토리는 노드를 시작하는 디렉토리이다.
@@ -24,11 +25,15 @@ app.use(
   })
 );
 
-app.get("/test", (req, res, next) => {
-  req.session.count += 1;
-  return res.send(`${req.session.count}`);
-});
+// 현재 로그인한 유저를 볼수 있음
+// app.use((req, res, next) => {
+//   req.sessionStore.all((error, sessions) => {
+//     console.log(sessions);
+//     next();
+//   });
+// });
 
+app.use(localsMiddleware);
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
