@@ -29,12 +29,15 @@ app.use(express.urlencoded({ extended: true })); // express가 form data를 읽�
 // 백엔드에는 생성된 세션ID들을 관리
 app.use(
   session({
-    secret: "Hello!",
+    secret: process.env.COOKIE_SECRET,
     resave: false,
-    saveUninitialized: false, // 이건 세션을 수정할때만 세션을 저장할 수 있도록 설정 그니까 유저컨트롤러에서 postLogin을 할때마단
+    saveUninitialized: false, // 이건 세션을 수정할때만 세션을 저장할 수 있도록 설정 그니까 유저컨트롤러에서 postLogin을 할때마다
     // 세션을 수정하고 있으니 저장되겠지?
+    // cookie: {
+    //   maxAge: 20000,
+    // }, // 쿠키 만료기간 정할 수 있음
     store: MongoStore.create({
-      mongoUrl: "mongodb://127.0.0.1:27017/wetube", // 이 부분이 세션 정보들을 db에 저장 즉 이제 서버에 저장되지 않고 db에 저장되므로
+      mongoUrl: process.env.DB_URL, // 이 부분이 세션 정보들을 db에 저장 즉 이제 서버에 저장되지 않고 db에 저장되므로
       // 자동으로 로그인이 유지가 됨
     }),
   })
