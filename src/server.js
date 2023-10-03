@@ -4,6 +4,7 @@ import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 import { localsMiddleware } from "./middlewares";
 
 // console.log( process.cwd() )  현재 작업 위치의 디렉토리
@@ -31,6 +32,10 @@ app.use(
     secret: "Hello!",
     resave: true,
     saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: "mongodb://127.0.0.1:27017/wetube", // 이 부분이 세션 정보들을 db에 저장 즉 이제 서버에 저장되지 않고 db에 저장되므로
+      // 자동으로 로그인이 유지가 됨
+    }),
   })
 );
 
