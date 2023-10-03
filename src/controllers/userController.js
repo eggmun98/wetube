@@ -43,7 +43,7 @@ export const getLogin = (req, res) =>
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username, socialOnly: false });
   //   const exists = await User.exists({ username });
   if (!user) {
     return res.status(400).render("login", {
@@ -105,8 +105,7 @@ export const finishGithubLogin = async (req, res) => {
       })
     ).json();
 
-    // console.log("access토큰임", userData);
-
+    // 이메일을 따로 얻기 위해서는 이 api 사용해야 함
     const emailData = await (
       await fetch(`${apiUrl}/user/emails`, {
         headers: {
@@ -114,8 +113,6 @@ export const finishGithubLogin = async (req, res) => {
         },
       })
     ).json();
-
-    console.log("이메일데이터임", emailData);
 
     const emailObj = emailData.find(
       (email) => email.primary === true && email.verified === true
@@ -125,13 +122,11 @@ export const finishGithubLogin = async (req, res) => {
       return res.redirect("/login");
     }
 
-    const existingUser = await User.findOne({ email: emailObj.email });
-    if (existingUser) {
-      req.session.loggedIn = true;
-      req.session.user = existingUser;
-      return res.redirect("/");
-    } else {
-      const user = await User.create({
+    // github 로그인
+    let user = await User.findOne({ email: emailObj.email });
+    if (!user) {
+      user = await User.create({
+        avatarUrl: userData.avatar_url,
         name: userData.name,
         username: userData.login,
         email: emailObj.email,
@@ -139,16 +134,19 @@ export const finishGithubLogin = async (req, res) => {
         socialOnly: true,
         location: userData.location,
       });
-      req.session.loggedIn = true;
-      req.session.user = user;
-      return res.redirect("/");
     }
+    req.session.loggedIn = true;
+    req.session.user = user;
+    return res.redirect("/");
   } else {
     res.redirect("/login");
   }
 };
 
+export const logout = (req, res) => {
+  req.session.destroy();
+  return res.redirect("/");
+};
+
 export const edit = (req, res) => res.send("edit user");
-export const remove = (req, res) => res.send("delete user");
-export const logout = (req, res) => res.send("Log out");
 export const see = (req, res) => res.send("See");
