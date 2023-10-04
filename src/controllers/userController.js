@@ -172,13 +172,28 @@ export const postEdit = async (req, res) => {
     body: { name, email, username, location },
   } = req; // 구조분해할당의 방법중 하나
 
-  await User.findByIdAndUpdate(_id, {
-    name,
-    email,
-    username,
-    location,
-  });
+  // 세션과 유저프로필을 업데이트 하는 방법 중 하나
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location,
+    },
+    { new: true }
+  ); // true를 해준 이유는 findByIdAndUpdate는 옛날 데이터를 가져옴 그래서 new를 이용해서 새로운 데이터를 업데이트하게함
+  req.session.user = updatedUser;
 
-  return res.render("edit-profile");
+  // 세션 을 업데이트 하는 방법 중 하나 => 프로필 수정창 인풋의 벨류값에 기본적으로 세션 유저 정보를 넣었음 그래서 세션을 수정해야 함
+  // req.session.user = {
+  //   ...req.session.user,
+  //   name,
+  //   email,
+  //   username,
+  //   location,
+  // };
+
+  return res.redirect("/users/edit");
 };
 export const see = (req, res) => res.send("See");
