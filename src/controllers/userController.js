@@ -159,6 +159,12 @@ export const logout = (req, res) => {
   req.session.destroy(); // 세션 데이터를 삭제 즉 로그아웃
   return res.redirect("/");
 };
-
-export const edit = (req, res) => res.send("edit user");
+export const getEdit = (req, res) => {
+  return res.render("edit-profile", {
+    pageTitle: "Edit Profile",
+  });
+};
+export const postEdit = (req, res) => {
+  return res.render("edit-profile");
+};
 export const see = (req, res) => res.send("See");
