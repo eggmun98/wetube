@@ -2,8 +2,8 @@ extends base.pug
 
 block content 
     form(method="POST")
-        input(placeholder="email", name="email", type="email", required, value=loggedInUser.name)
-        input(placeholder="name", name="name", type="text", required, value=loggedInUser.email)
+        input(placeholder="name", name="name", type="text", required, value=loggedInUser.name)
+        input(placeholder="email", name="email", type="email", required, value=loggedInUser.email)
         input(placeholder="username", name="username", type="text", required, value=loggedInUser.username)
         input(placeholder="location", name="location", type="text", required, value=loggedInUser.location)
         input(type="submit", value="Update Profile")

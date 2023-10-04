@@ -164,7 +164,21 @@ export const getEdit = (req, res) => {
     pageTitle: "Edit Profile",
   });
 };
-export const postEdit = (req, res) => {
+export const postEdit = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { name, email, username, location },
+  } = req; // 구조분해할당의 방법중 하나
+
+  await User.findByIdAndUpdate(_id, {
+    name,
+    email,
+    username,
+    location,
+  });
+
   return res.render("edit-profile");
 };
 export const see = (req, res) => res.send("See");
