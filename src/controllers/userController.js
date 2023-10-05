@@ -170,7 +170,10 @@ export const postEdit = async (req, res) => {
       user: { _id },
     },
     body: { name, email, username, location },
+    file,
   } = req; // 구조분해할당의 방법중 하나
+
+  console.log("Qq", file);
 
   // 세션과 유저프로필을 업데이트 하는 방법 중 하나
   const updatedUser = await User.findByIdAndUpdate(

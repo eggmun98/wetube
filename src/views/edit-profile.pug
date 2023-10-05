@@ -1,12 +1,14 @@
 extends base.pug
 
 block content 
-    form(method="POST")
-        input(placeholder="name", name="name", type="text", required, value=loggedInUser.name)
-        input(placeholder="email", name="email", type="email", required, value=loggedInUser.email)
-        input(placeholder="username", name="username", type="text", required, value=loggedInUser.username)
-        input(placeholder="location", name="location", type="text", required, value=loggedInUser.location)
-        input(type="submit", value="Update Profile")
-        if !loggedInUser.socialOnly
-            hr
-            a(href="change-password") Change Password &rarr;
+    form(method="POST", enctype="multipart/form-data")
+        label(for="avatar") Avatar
+            input(type="file", id="avatar", name="avatar" accept="image/*")
+            input(placeholder="name", name="name", type="text", required, value=loggedInUser.name)
+            input(placeholder="email", name="email", type="email", required, value=loggedInUser.email)
+            input(placeholder="username", name="username", type="text", required, value=loggedInUser.username)
+            input(placeholder="location", name="location", type="text", required, value=loggedInUser.location)
+            input(type="submit", value="Update Profile")
+            if !loggedInUser.socialOnly
+                hr
+                a(href="change-password") Change Password &rarr;

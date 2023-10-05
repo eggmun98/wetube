@@ -1,3 +1,5 @@
+import multer from "multer";
+
 export const localsMiddleware = (req, res, next) => {
   //   console.log(req.session);
   // res.locals는 브라우저와 서버가 공유가 가능하다 즉 전역변수로 만들 수 있다.
@@ -24,3 +26,7 @@ export const publicOnlyMiddleware = (req, res, next) => {
     return res.redirect("/");
   }
 };
+
+export const uploadFiles = multer({
+  dest: "uploads/",
+});
