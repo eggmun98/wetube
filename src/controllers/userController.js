@@ -204,9 +204,35 @@ export const getChangePassword = (req, res) => {
   return res.render("users/change-password", { pageTitle: "Change Password" });
 };
 
-export const postChangePassword = (req, res) => {
-  // send notification
-  return res.redirect("/");
+export const postChangePassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id, password },
+    },
+
+    body: { oldPassword, newPassword, newPasswordConfirmation },
+  } = req;
+  const ok = await bcrypt.compare(oldPassword, password);
+  if (!ok) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The current password is incorrect",
+    });
+  }
+
+  if (newPassword !== newPasswordConfirmation) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The password does not match the confirmation",
+    });
+  }
+
+  const user = await User.findById(_id);
+  user.password = newPassword;
+  await user.save(); // 새로운 비밀번호 작동을 위해
+  req.session.user.password = user.password; // 세션도 업데이트를 해야 로그아웃 가능 근데 나는 없어도 잘 작동함
+
+  return res.redirect("/users/logout");
 };
 
-export const see = (req, res) => res.send("See");
+// export const see = (req, res) => res.send("See");
