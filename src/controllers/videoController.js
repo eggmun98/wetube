@@ -60,14 +60,17 @@ export const postUpload = async (req, res) => {
   const { title, description, hashtags } = req.body;
 
   try {
-    const video = new Video({
+    const newVideo = await Video.create({
       title,
       description,
       fileUrl,
       owner: _id, // 유저의 아이디를 저장
       hashtags: Video.formatHashtags(hashtags),
     });
-    await video.save();
+    const user = await User.findById(_id);
+    user.videos.push(newVideo._id);
+    user.save();
+    return res.redirect("/");
   } catch (error) {
     console.log(error);
     return res.status(400).render("upload", {
@@ -76,7 +79,6 @@ export const postUpload = async (req, res) => {
       errorMessage: error._message,
     });
   }
-  return res.redirect("/");
 };
 
 export const deleteVideo = async (req, res) => {
