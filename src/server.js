@@ -53,6 +53,7 @@ app.use(
 
 app.use(localsMiddleware);
 app.use("/", rootRouter);
+app.use("/uploads", express.static("uploads")); // express가 파일 위치를 읽으려면 필요함
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
 
