@@ -34,6 +34,7 @@ userRouter
   .route("/change-password")
   .get(getChangePassword)
   .post(postChangePassword);
-// userRouter.get("/:id", see);
+
+userRouter.get("/:id", see);
 
 export default userRouter;
