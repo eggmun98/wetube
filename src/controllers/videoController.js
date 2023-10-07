@@ -23,9 +23,15 @@ export const watch = async (req, res) => {
 
 export const getEdit = async (req, res) => {
   const { id } = req.params;
+  const {
+    user: { _id },
+  } = req.session;
   const video = await Video.findById(id);
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found" });
+  }
+  if (video.owner.toString() != _id.toString()) {
+    return res.status(403).redirect("/");
   }
   return res.render("edit", { pageTitle: `Editing:${video.title} `, video });
 };
@@ -33,10 +39,16 @@ export const getEdit = async (req, res) => {
 export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
+  const {
+    user: { _id },
+  } = req.session;
   const video = await Video.exists({ _id: id }); // 비디오 객체를 다 가져올 필요가 없음 exists가 true false로 Video가 있는지 판단
   // 즉 영상이 있는지 없는지만 확인하는게 효율적 getEdit는 pageTitle에 타이틀을 보내줘야 하기 때문에 객체를 다 가져옴
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found" });
+  }
+  if (video.owner.toString() != _id.toString()) {
+    return res.status(403).redirect("/");
   }
   await Video.findByIdAndUpdate(id, {
     title,
@@ -83,8 +95,17 @@ export const postUpload = async (req, res) => {
 
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
+  const {
+    user: { _id },
+  } = req.session;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.status(404).render("404", { pageTitle: "Video not found" });
+  }
+  if (video.owner.toString() != _id.toString()) {
+    return res.status(403).redirect("/");
+  }
   await Video.findByIdAndDelete(id);
-  console.log(id);
   // delete video
   return res.redirect("/");
 };
