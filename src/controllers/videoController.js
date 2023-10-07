@@ -12,12 +12,13 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
-  const owner = await User.findById(video.owner);
+  const video = await Video.findById(id).populate("owner"); // populate는 owner 부분에 User Data를 채워줌
+  // ref로 owner에 있는 id가 유저꺼인거를 알고 있음
+  // const owner = await User.findById(video.owner);  // db를 두번 호출하고 있으니 안좋음
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found" });
   }
-  return res.render("watch", { pageTitle: video.title, video, owner });
+  return res.render("watch", { pageTitle: video.title, video });
 };
 
 export const getEdit = async (req, res) => {
