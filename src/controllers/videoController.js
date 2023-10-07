@@ -50,6 +50,7 @@ export const getUpload = (req, res) => {
 };
 
 export const postUpload = async (req, res) => {
+  const { path: fileUrl } = req.file;
   console.log(req.body);
   const { title, description, hashtags } = req.body;
 
@@ -57,6 +58,7 @@ export const postUpload = async (req, res) => {
     const video = new Video({
       title,
       description,
+      fileUrl,
       hashtags: Video.formatHashtags(hashtags),
     });
     await video.save();
