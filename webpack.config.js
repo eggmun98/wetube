@@ -2,9 +2,12 @@ console.log(__dirname); // 현재 파일의 절대경로를 알려줌
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+// 웹팩을 저장할 때마다 노디몬이 실행됨 고쳐야함 => nodemon.json 파일을 만들어서 설정을 하면됨
+
 module.exports = {
   entry: "./src/client/js/main.js",
   mode: "development",
+  watch: true, // 웹팩을 계속 실행시켜줌 그니까 서버를 계속 켜놓고 있음
   plugins: [
     new MiniCssExtractPlugin({
       filename: "css/styles.css",
@@ -13,6 +16,7 @@ module.exports = {
   output: {
     filename: "js/main.js",
     path: path.resolve(__dirname, "assets"),
+    clean: true, // clean는 옵션 폴더를 빌드를 시작하기 전에 클린 해주는거임
   },
   module: {
     rules: [
