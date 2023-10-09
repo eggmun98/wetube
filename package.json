@@ -29,11 +29,15 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
-    "babel-loader": "^8.3.0",
     "@babel/core": "^7.22.20",
     "@babel/node": "^7.22.19",
     "@babel/preset-env": "^7.22.20",
+    "babel-loader": "^8.3.0",
+    "css-loader": "^6.8.1",
     "nodemon": "^3.0.1",
+    "sass": "^1.69.0",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   }
